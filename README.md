@@ -11,3 +11,4 @@ Retaking SDP module from 2015. Coursework assignment therefore completed individ
 
 1. Initial commit of base files from Keith's central repository.
 2. Board class updates to makeMove and getPossibleMoves.
+3. State class updates to initializeChildren.
