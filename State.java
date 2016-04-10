@@ -1,9 +1,12 @@
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
 /**
- * An instance represents the state of a game of Connect Four.
+ * Class State - An instance represents the state of a game of Connect Four.
+ *
+ * @author Daryl Smith
  */
 public class State implements Comparable<Object> {
     /**
@@ -108,10 +111,19 @@ public class State implements Comparable<Object> {
      * initializes only this State's children; it does not recursively
      * initialize all descendants.
      */
-    public void initializeChildren() {
-        // TODO
+    public void initializeChildren() 
+    {
+    	Move[] possibleMoves = this.board.getPossibleMoves(this.player);
+    	State[] possibleStates = new State[possibleMoves.length];
+    	for (int i = 0; i < possibleMoves.length; i++) 
+    	{
+    		possibleStates[i] = new State(this.getPlayer().opponent(),
+    				new Board(this.board, possibleMoves[i]),
+    				possibleMoves[i]);
+    	}
+    	this.children = possibleStates; 
     }
-
+ 
     /**
      * Write this State to a file called "output.txt", including its
      * children, their children, etc.. This method allows the State to
