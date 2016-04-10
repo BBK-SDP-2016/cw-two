@@ -1,5 +1,7 @@
 /**
- * Runs the Connect Four game.
+ * Class Game - Runs the Connect Four game.
+ *
+ * @author Daryl Smith
  */
 public class Game {
 
@@ -28,14 +30,50 @@ public class Game {
          * see in the comments after these two assignments. In those assignments,
          * the second argument of the constructor is the depth to which AI
          * searches the game space. */
-        Solver p1 = new Dummy(Player.RED);
-        Solver p2 = new Dummy(Player.YELLOW);
+        //Solver p1 = new Dummy(Player.RED);
+        //Solver p2 = new Dummy(Player.YELLOW);
 
-        // Solver p1= new AI(Board.Player.RED, 5);
-        // Solver p2= new AI(Board.Player.YELLOW, 5);
-
-        Game game = new Game(p1, p2);
-        game.runGame();
+         AI p1= new AI(Player.RED, 5);
+         AI p2= new AI(Player.YELLOW, 5);
+        
+        
+        Board b= new Board();
+        //fillColumnAlternating(b, Player.RED, 0);  // fill column 0
+        //fillColumnAlternating(b, Player.RED, 3);  // fill column 0
+        //fillColumnAlternating(b, Player.RED, 4);  // fill column 0
+        //fillColumn(b, Player.RED, 6);  // fill column 0
+        
+        Move mv = new Move(Player.RED,1);
+        b.makeMove(mv);
+        Move mv2 = new Move(Player.YELLOW,6);
+        b.makeMove(mv2);
+        Move mv3 = new Move(Player.RED,1);
+        b.makeMove(mv3);
+        Move mv4 = new Move(Player.YELLOW,4);
+        b.makeMove(mv4);
+        Move mv5 = new Move(Player.RED,1);
+        b.makeMove(mv5);
+        Move mv6 = new Move(Player.YELLOW,4);
+        b.makeMove(mv6);
+        
+        
+        //State x = new State(Player.RED,b,mv6);
+        //AI.createGameTree(x,2);
+        //p1.minimax(x);
+        Move[] bestMoves = p2.getMoves(b);
+        for (Move m : bestMoves) {
+        	System.out.println(m);
+        }
+        
+        //x.writeToFile();
+        
+        //Move[] moves= b.getPossibleMoves(Player.RED);
+        //for (Move m : moves) {
+        //	System.out.println(m);
+        //}
+        
+        //Game game = new Game(p1, p2);
+        //game.runGame();
         
         /* When testing, you may want to comment out all the above statements
          */
@@ -231,4 +269,22 @@ public class Game {
 
         return true;
     }
+    
+    
+    public static void fillColumn(Board b, Player p, int col) {
+    	for (int i = 0; i < Board.NUM_ROWS; i++) {
+    		b.makeMove(new Move(p, col));
+    	}
+    }
+    
+    public static void fillColumnAlternating(Board b, Player p, int col) {
+    	for (int i = 0; i < Board.NUM_ROWS; i++) {
+    		if (i % 2 == 0) {
+    			b.makeMove(new Move(p, col));
+    		} else {
+    			b.makeMove(new Move(p.opponent(), col));
+    		}
+    	}
+    }
+    
 }
