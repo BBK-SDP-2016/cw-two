@@ -13,3 +13,4 @@ Retaking SDP module from 2015. Coursework assignment therefore completed individ
 2. Board class updates to makeMove and getPossibleMoves.
 3. State class updates to initializeChildren.
 4. Implement AI methods.
+5. Implement Game class.
