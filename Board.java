@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An instance represents a grid of pieces from two opposing
+ * Class Board - An instance represents a grid of pieces from two opposing
  * players in a game of Connect Four. The grid is 0-indexed first by rows
  * starting at the top, then by columns 0-indexed starting at the left.
+ *
+ * @author Daryl Smith
  */
 public class Board {
     /**
@@ -35,6 +37,7 @@ public class Board {
         board = new Player[NUM_ROWS][NUM_COLS];
     }
 
+
     /**
      * Constructor: a duplicate of Board b.
      */
@@ -42,7 +45,7 @@ public class Board {
         board = new Player[NUM_ROWS][NUM_COLS];
         for (int r = 0; r < NUM_ROWS; r++) {
             for (int c = 0; c < NUM_COLS; c++) {
-                board[r][c] = b.board[r][c];
+                this.board[r][c] = b.board[r][c];
             }
         }
     }
@@ -79,10 +82,22 @@ public class Board {
      * player into move's column on this Board.
      * Throw an IllegalArgumentException if move's column is full on this Board.
      */
-    public void makeMove(Move move) {
-        // TODO
-        // Delete the following code once you've decided to start implementing
-        // throw new UnsupportedOperationException("You need to implement makeMove before running the game.");
+    public void makeMove(Move move) 
+    {
+        //check if the proposed move column is already filled 
+    	if (getTile(0, move.getColumn()) != null)
+        {
+        	throw new IllegalArgumentException ("The column you are attempting to move to is already full");
+        }
+
+        for(int i = NUM_ROWS-1; i >= 0; i--) 
+    	{
+    		if (getTile(i, move.getColumn()) == null) 
+    		{
+    			this.board[i][move.getColumn()] = move.getPlayer();
+    			break;
+    		}
+    	}
     }
 
     /**
@@ -95,11 +110,27 @@ public class Board {
      * of columns that are not full. Thus, if all columns are full, return an
      * array of length 0.
      */
-    public Move[] getPossibleMoves(Player p) {
-        // TODO
-        return null;
+    public Move[] getPossibleMoves(Player p) 
+    {
+    	if (hasConnectFour() != null) 
+    	//board has a winner, return a zero length array
+    	{
+    		return new Move[0];   		
+    	}
+    	
+    	//setup an arraylist to store the possible moves
+    	ArrayList<Move> possibleMoves = new ArrayList<Move>();
+    	
+    	for (int i = 0; i < NUM_COLS; i++) 
+    	{
+    		if (getTile(0, i) == null) 
+    		{
+    			possibleMoves.add(new Move(p,i));
+    		}
+    	}
+    	return possibleMoves.toArray(new Move[0]);
     }
-
+    	
     /**
      * Return a representation of this board
      */
